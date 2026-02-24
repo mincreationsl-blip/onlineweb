@@ -24,6 +24,26 @@ const initialProducts = [
             "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?auto=format&fit=crop&q=80&w=800",
             "https://images.unsplash.com/photo-1588872661356-687d4245f4fc?auto=format&fit=crop&q=80&w=800"
         ]
+    },
+    {
+        id: "3",
+        name: "Sonic Wave Z Audio",
+        desc: "Bone conduction technology with active noise cancellation. 40h battery life.",
+        price: "45000",
+        category: "Audio",
+        stock: 10,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800",
+        images: ["https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=800"]
+    },
+    {
+        id: "4",
+        name: "Karaoke Speaker - 2 Mic",
+        desc: "K12 Dual Microphone Karaoke Bluetooth Speaker RGB Light Two 5W Speakers.",
+        price: "2500",
+        category: "Audio",
+        stock: 25,
+        image: "https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&q=80&w=800",
+        images: ["https://images.unsplash.com/photo-1589003077984-894e133dabab?auto=format&fit=crop&q=80&w=800"]
     }
 ];
 
