@@ -124,15 +124,27 @@
 
     <!-- Product Grid -->
     <main id="products" class="max-w-7xl mx-auto px-6 py-20 pb-40">
-        <div class="flex justify-between items-center mb-12">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
             <h2 class="text-3xl font-bold">Featured <span class="text-cyan-400">Products</span></h2>
-            <div class="flex gap-2">
-                <button
-                    class="category-btn px-4 py-2 glass rounded-lg text-sm border-cyan-500 text-cyan-400">All</button>
-                <button
-                    class="category-btn px-4 py-2 glass rounded-lg text-sm hover:border-cyan-500 transition-all">Mobile</button>
-                <button
-                    class="category-btn px-4 py-2 glass rounded-lg text-sm hover:border-cyan-500 transition-all">Laptop</button>
+            <div class="relative w-full md:w-64">
+                <i class="fas fa-filter absolute left-4 top-1/2 -translate-y-1/2 text-cyan-500 text-sm"></i>
+                <select id="categoryFilter"
+                    class="w-full bg-slate-900/50 border border-slate-700/50 rounded-xl px-10 py-3 appearance-none focus:border-cyan-500 outline-none transition-all cursor-pointer text-sm font-semibold">
+                    <option value="all">All Categories</option>
+                    <option value="Electronic">Electronics</option>
+                    <option value="Mobile">Mobile Phones</option>
+                    <option value="Laptop">Laptops</option>
+                    <option value="Audio">Audio Gear</option>
+                    <option value="Tech Gadget">Tech Gadgets</option>
+                    <option value="Household Items">Household Items</option>
+                    <option value="Home Appliances">Home Appliances</option>
+                    <option value="Women's wear">Women's Wear</option>
+                    <option value="Gents wear">Men's Wear</option>
+                    <option value="Kids wear">Kids Wear</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+                <i
+                    class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none text-xs"></i>
             </div>
         </div>
 

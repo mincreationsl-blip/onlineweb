@@ -9,7 +9,7 @@ const App = {
     },
 
     init() {
-        this.renderProducts('All');
+        this.renderProducts('all');
         this.setupEventListeners();
 
         // Auto-open cart if redirected from product page
@@ -19,11 +19,11 @@ const App = {
         }
     },
 
-    renderProducts(filter = 'All') {
+    renderProducts(filter = 'all') {
         const grid = document.getElementById('productGrid');
         let products = Storage.getProducts();
 
-        if (filter !== 'All') {
+        if (filter !== 'all') {
             products = products.filter(p => p.category === filter);
         }
 
@@ -52,7 +52,7 @@ const App = {
                     <div class="flex items-center gap-1.5" onclick="event.stopPropagation()">
                         <div class="w-2.5 h-2.5 rounded-full ${p.status === 'not_available' ? 'bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]' : 'bg-green-500 shadow-[0_0_8px_#22c55e]'}"></div>
                         <span class="text-[10px] font-bold uppercase tracking-wider ${p.status === 'not_available' ? 'text-red-400' : 'text-green-400'}">
-                            ${p.status === 'not_available' ? 'Not Available' : `In Stock: ${p.stock || 0}`}
+                            ${p.status === 'not_available' ? 'Not Available' : 'Available'}
                         </span>
                     </div>
                 </div>
@@ -92,36 +92,31 @@ const App = {
         const checkoutModal = document.getElementById('checkoutModal');
         const cancelCheckout = document.getElementById('cancelCheckout');
         const checkoutForm = document.getElementById('checkoutForm');
+        const categoryFilter = document.getElementById('categoryFilter');
 
-        cartBtn.onclick = () => cartDrawer.classList.remove('translate-x-full');
-        closeCart.onclick = () => cartDrawer.classList.add('translate-x-full');
+        if (cartBtn) cartBtn.onclick = () => cartDrawer.classList.remove('translate-x-full');
+        if (closeCart) closeCart.onclick = () => cartDrawer.classList.add('translate-x-full');
 
-        checkoutBtn.onclick = () => {
-            checkoutModal.classList.remove('hidden');
-        };
-
-        cancelCheckout.onclick = () => checkoutModal.classList.add('hidden');
-
-        checkoutForm.onsubmit = (e) => {
-            e.preventDefault();
-            this.processOrder();
-        };
-
-        // Category Filter Listeners
-        const filterBtns = document.querySelectorAll('.category-btn');
-        filterBtns.forEach(btn => {
-            btn.onclick = () => {
-                // UI feedback
-                filterBtns.forEach(b => {
-                    b.classList.remove('border-cyan-500', 'text-cyan-400');
-                    b.classList.add('hover:border-cyan-500');
-                });
-                btn.classList.add('border-cyan-500', 'text-cyan-400');
-                btn.classList.remove('hover:border-cyan-500');
-
-                this.renderProducts(btn.innerText);
+        if (checkoutBtn) {
+            checkoutBtn.onclick = () => {
+                checkoutModal.classList.remove('hidden');
             };
-        });
+        }
+
+        if (cancelCheckout) cancelCheckout.onclick = () => checkoutModal.classList.add('hidden');
+
+        if (checkoutForm) {
+            checkoutForm.onsubmit = (e) => {
+                e.preventDefault();
+                this.processOrder();
+            };
+        }
+
+        if (categoryFilter) {
+            categoryFilter.onchange = (e) => {
+                this.renderProducts(e.target.value);
+            };
+        }
     },
 
     processOrder() {
@@ -138,21 +133,6 @@ const App = {
 
         // Save for admin view
         Storage.saveOrder(order);
-
-        // Update Stock in Storage
-        order.items.forEach(item => {
-            const prod = Storage.getProductById(item.id);
-            if (prod) {
-                const currentStock = prod.stock || 0;
-                const newStock = Math.max(0, currentStock - item.quantity);
-                const update = {
-                    id: item.id,
-                    stock: newStock,
-                    status: newStock === 0 ? 'not_available' : prod.status
-                };
-                Storage.saveProduct(update);
-            }
-        });
 
         // Generate WhatsApp Message for Seller
         let message = `🚀 *NEW ORDER RECEIVED* 🚀\n\n`;
@@ -176,7 +156,7 @@ const App = {
         Cart.clear();
         document.getElementById('checkoutModal').classList.add('hidden');
         document.getElementById('cartDrawer').classList.add('translate-x-full');
-        this.renderProducts(); // Re-render to show updated availability
+        this.renderProducts(); // Re-render
 
         // Open WhatsApp
         window.open(waLink, '_blank');
@@ -186,6 +166,5 @@ const App = {
 };
 
 window.App = App;
-document.addEventListener('DOMContentLoaded', () => {
-    App.init();
-});
+App.init();
+
